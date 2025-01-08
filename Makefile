@@ -1,8 +1,10 @@
 # Define the Docker Compose commands
-up:
+start:
 	docker-compose up -d --build server
-down:
+stop:
 	docker-compose down
+install:
+	docker-compose run --rm composer install
 migrate:
 	docker-compose run --rm artisan migrate
 artisan:
