@@ -15,8 +15,8 @@ These instructions will help you set up and run the project using Docker.
 
 1. Clone the repository:
     ```sh
-    git clone <repository-url>
-    cd <repository-directory>
+    git clone https://github.com/mbsurfer/workopia.git
+    cd workopia
     ```
 
 2. Copy the example environment variables file and modify it as needed:
@@ -40,6 +40,7 @@ These instructions will help you set up and run the project using Docker.
     # OR
 
     docker-compose run --rm composer install
+    docker-compose run --rm npm i
 
 4. Create the database
     ```sh
@@ -64,20 +65,28 @@ make stop
 
 #### Execute a Composer command:
 ```sh
-make composer <command>
+make composer CMD=<command> ARGS=<args>
 ```
 
 #### Execute a Laravel Artisan command:
 ```sh
-make artisan <command>
+make artisan CMD=<command> ARGS=<args>
 
 # For example:
-make artisan make:controller JobController
+make artisan CMD="make:controller JobController" ARGS="--resource"
 ```
 
 #### Run database migration:
 ```sh
 make migrate
+```
+
+#### Create a new controller with resources:
+```sh
+make controller NAME=<name>
+
+# For example:
+make controller NAME=Job
 ```
 
 ### Additional Commands
