@@ -9,7 +9,15 @@
         id="{{ $id }}"
         type="{{ $type }}"
         name="{{ $name }}"
-        class="w-full px-4 py-2 border rounded focus:outline-none @error($name) border-red-500 @enderror"
+        @class([
+            'w-full',
+            'px-4',
+            'py-2',
+            'border',
+            'rounded',
+            'focus:outline-none',
+            'border-red-500' => $errors->has($name)
+        ])
         placeholder="{{ $placeholder }}"
         value="{{ old($name, $value) }}"
     />
