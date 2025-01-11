@@ -6,6 +6,7 @@ use App\Models\User;
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Storage;
 
 class DatabaseSeeder extends Seeder
 {
@@ -15,7 +16,10 @@ class DatabaseSeeder extends Seeder
     public function run(): void
     {
         DB::table('job_listings')->truncate();
+        $this->command->info('Truncated job_listings table.');
+
         DB::table('users')->truncate();
+        $this->command->info('Truncated users table.');
 
         $this->call([
             RandomUserSeeder::class,

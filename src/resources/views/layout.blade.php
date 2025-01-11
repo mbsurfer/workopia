@@ -9,6 +9,7 @@
     <link rel="stylesheet" href="https://rsms.me/inter/inter.css">
     @vite('resources/css/app.css')
     <link rel="stylesheet" href={{asset('css/style.css')}} />
+    <script src="//unpkg.com/alpinejs" defer></script>
 <body class="bg-gray-100">
     <x-header />
 
@@ -18,6 +19,15 @@
     @endif
 
     <main class="container mx-auto p-4 mt-4">
+        @if(session('info'))
+            <x-alert type="info" :message="session('info')" />
+        @endif
+        @if(session('success'))
+            <x-alert type="success" :message="session('success')" />
+        @endif
+        @if(session('error'))
+            <x-alert type="error" :message="session('error')" />
+        @endif
         {{ $slot }}
     </main>
     <script src={{asset('js/script.js')}}></script>

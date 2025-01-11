@@ -6,6 +6,7 @@ use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 use App\Models\User;
+use Illuminate\Support\Facades\File;
 
 class JobSeeder extends Seeder
 {
@@ -30,7 +31,18 @@ class JobSeeder extends Seeder
 
         // Insert job listings into database
         DB::table('job_listings')->insert($jobListings);
+        $this->command->info('Inserted job_listing records.');
 
-        echo "Jobs created successfully.\n";
+        // Copy seed images to storage
+        $source = database_path('seeders/files/jobs');
+        $destination = storage_path('app/public/jobs');
+
+        $this->command->info('Deleting existing job storage directory.');
+        if (File::exists($destination)) {
+            File::deleteDirectory($destination);
+        }
+
+        File::copyDirectory($source, $destination);
+        $this->command->info('Copied job files to storage.');
     }
 }

@@ -52,9 +52,24 @@ class JobController extends Controller
             'company_website' => 'nullable|url',
         ]);
 
+        // Upload file if exists
+        if ($request->hasFile('company_logo')) {
+            $file = $request->file('company_logo');
+            $fileName = time() . '_' . $file->getClientOriginalName();
+            $filepath = $file->storeAs('jobs/company_logos', $fileName, 'public');
+
+            if ($filepath) {
+                // Update validated data with the new file path
+                $validatedData['company_logo'] = $fileName;
+            } else {
+                return redirect()->back()->with('error', 'Failed to upload company logo.');
+            }
+        }
+
         //todo: replace user_id with session user id
         Job::create($validatedData + ['user_id' => 1]);
 
+        // When with() is used with redirect(), the data is stored in the session
         return redirect()->route('jobs.index')->with('success', 'Job listing created successfully.');
     }
 

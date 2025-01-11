@@ -14,6 +14,6 @@ class RandomUserSeeder extends Seeder
     public function run(): void
     {
         $users = User::factory()->count(10)->create();
-        echo "Users created successfully.\n";
+        $this->command->info('Inserted 10 random users.');
     }
 }

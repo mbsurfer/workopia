@@ -49,7 +49,7 @@
                         <li class="mb-2">
                             <strong>Site Location:</strong> {{ $job->city }}, {{ $job->state }}
                         </li>
-                        <li class="mb-2">
+                        <li @class(['mb-2', 'hidden' => !$job->tags])>
                             <strong>Tags:</strong>
                             {{ ucwords(str_replace(',', ', ', $job->tags)) }}
                         </li>
@@ -66,7 +66,7 @@
                         Job Requirements
                     </h3>
                     <p>
-                        {{ $job->requirements }}
+                        {{ $job->requirements ?? 'No requirements provided' }}
                     </p>
                     <h3
                         class="text-lg font-semibold mt-4 mb-2 text-blue-500"
@@ -74,7 +74,7 @@
                         Benefits
                     </h3>
                     <p>
-                        {{ $job->benefits }}
+                        {{ $job->benefits ?? 'No benefits provided' }}
                     </p>
                 </div>
                 <p class="my-5">
@@ -102,11 +102,13 @@
             <h3 class="text-xl text-center mb-4 font-bold">
                 Company Info
             </h3>
-            <img
-                src="/images/{{ $job->company_logo }}"
-                alt="{{ $job->company_name }} Logo"
-                class="w-full rounded-lg mb-4 m-auto"
-            />
+            @if($job->company_logo)
+                <img
+                    src="{{ Storage::url('jobs/company_logos/' . $job->company_logo) }}"
+                    alt="{{ $job->company_name }} Logo"
+                    class="w-full rounded-lg mb-4 m-auto"
+                />
+            @endif
             <h4 class="text-lg font-bold">{{ $job->company_name }}</h4>
             <p class="text-gray-700 text-lg my-3">
                 {{ $job->company_description }}
