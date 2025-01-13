@@ -10,7 +10,8 @@ These instructions will help you set up and run the project using Docker.
 
 - Docker
 - Docker Compose
-- NPM
+- npm
+- Make (optional)
 
 ### Installation
 
