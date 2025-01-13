@@ -1,8 +1,14 @@
-@props(['id', 'name', 'label' => null])
+@props(['id', 'name', 'label' => null, 'image' => null])
 
 <div class="mb-4">
     @if ($label)
         <label class="block text-gray-700" for="{{ $id }}">{{ $label }}</label>
+    @endif
+    @if ($image)
+        <img
+            src="{{ Storage::url($image) }}"
+            class="w-1/3 rounded-lg mb-4"
+        />
     @endif
     <input
         id="{{ $id }}"
