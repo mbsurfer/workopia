@@ -49,12 +49,5 @@ services:
     volumes:
       - ./src:/var/www/html
     entrypoint: [ "php", "/var/www/html/artisan" ]
-  vite:
-    build:
-      context: .
-      dockerfile: dockerfiles/vite.dockerfile
-    volumes:
-      - ./src:/app
 volumes:
-  # mysql_data:
   pgsql_data:
