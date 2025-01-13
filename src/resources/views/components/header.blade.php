@@ -1,16 +1,21 @@
+@php
+    $navigation = [
+        ['/jobs','All Jobs'],
+        ['/jobs/saved','Saved Jobs'],
+        ['/login','Login'],
+        ['/register','Register'],
+        ['/dashboard','Dashboard'],
+    ]
+@endphp
 <header class="bg-blue-900 text-white p-4" x-data="{ open: false }">
     <div class="container mx-auto flex justify-between items-center">
         <h1 class="text-3xl font-semibold">
             <a href="{{url('/')}}">Workopia</a>
         </h1>
         <nav class="hidden md:flex items-center space-x-4">
-            <x-nav-link url="/" :active="request()->is('/')">Home</x-nav-link>
-            <x-nav-link url="/jobs" :active="request()->is('jobs')">Jobs</x-nav-link>
-            <x-nav-link url="/jobs/saved" :active="request()->is('jobs/saved')">Saved Jobs</x-nav-link>
-            <x-nav-link url="/login" :active="request()->is('login')">Login</x-nav-link>
-            <x-nav-link url="/regester" :active="request()->is('regester')">Regester</x-nav-link>
-            <x-nav-link url="/dashboard" :active="request()->is('dashboard')" icon="gauge">Dashboard</x-nav-link>
-    
+            @foreach($navigation as $nav)
+                <x-nav-link url="{{$nav[0]}}" :active="request()->is($nav[0])">{{$nav[1]}}</x-nav-link>
+            @endforeach
             <x-button-link url="/jobs/create" icon="edit">Create Job</x-button-link>
         </nav>
         <button
@@ -28,12 +33,9 @@
         x-show="open"
         @click.away="open = false"
     >
-        <x-nav-link url="/" :active="request()->is('/')" :mobile="true">Home</x-nav-link>
-        <x-nav-link url="/jobs" :active="request()->is('jobs')" :mobile="true">Jobs</x-nav-link>
-        <x-nav-link url="/jobs/saved" :active="request()->is('jobs/saved')" :mobile="true">Saved Jobs</x-nav-link>
-        <x-nav-link url="/login" :active="request()->is('login')" :mobile="true">Login</x-nav-link>
-        <x-nav-link url="/regester" :active="request()->is('regester')" :mobile="true">Regester</x-nav-link>
-        <x-nav-link url="/dashboard" :active="request()->is('dashboard')" icon="gauge" :mobile="true">Dashboard</x-nav-link>
+        @foreach($navigation as $nav)
+            <x-nav-link url="{{$nav[0]}}" :active="request()->is($nav[0])" :mobile="true">{{$nav[1]}}</x-nav-link>
+        @endforeach
         <x-button-link url="/jobs/create" icon="edit" :block="true">Create Job</x-button-link>
     </nav>
 </header>

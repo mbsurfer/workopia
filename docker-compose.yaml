@@ -23,12 +23,6 @@ services:
     volumes:
       # :delegated helps with performace by batching data written back to the host machine
       - ./src:/var/www/html:delegated
-  # mysql:
-  #   image: mysql:5.7
-  #   env_file:
-  #     - ./env/mysql.env
-  #   volumes:
-  #     - mysql_data:/var/lib/mysql
   pgsql:
     image: postgres
     restart: always
@@ -61,21 +55,6 @@ services:
       dockerfile: dockerfiles/vite.dockerfile
     volumes:
       - ./src:/app
-  npm:
-    build:
-      context: ./dockerfiles
-      dockerfile: npm.dockerfile
-    volumes:
-      - ./src:/var/www/html
-    entrypoint: [ "npm" ]
-  npx:
-    build:
-      context: ./dockerfiles
-      dockerfile: npm.dockerfile
-    volumes:
-      - ./src:/var/www/html
-    entrypoint: [ "npx" ]
-
 volumes:
   # mysql_data:
   pgsql_data:

@@ -9,6 +9,8 @@ install:
 migrate:
 	docker-compose run --rm artisan migrate
 controller:
+	docker-compose run --rm artisan make:controller
+resource-controller:
 	docker-compose run --rm artisan make:controller ${NAME}Controller --resource
 component:
 	docker-compose run --rm artisan make:component ${NAME}
@@ -26,3 +28,5 @@ seeder:
 	docker-compose run --rm artisan make:seeder
 seed:
 	docker-compose run --rm artisan db:seed
+dev:
+	cd ./src && npm run dev

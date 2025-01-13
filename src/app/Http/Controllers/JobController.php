@@ -34,6 +34,7 @@ class JobController extends Controller
 
     /**
      * Display a listing of the resource.
+     * @route [GET] /jobs
      */
     public function index(): View
     {
@@ -44,6 +45,7 @@ class JobController extends Controller
 
     /**
      * Show the form for creating a new resource.
+     * @route [GET] /jobs/create
      */
     public function create()
     {
@@ -52,6 +54,7 @@ class JobController extends Controller
 
     /**
      * Store a newly created resource in storage.
+     * @route [POST] /jobs
      */
     public function store(Request $request)
     {
@@ -80,6 +83,7 @@ class JobController extends Controller
 
     /**
      * Display the specified resource.
+     * @route [GET] /jobs/{job}
      */
     public function show(Job $job)
     {
@@ -88,6 +92,7 @@ class JobController extends Controller
 
     /**
      * Show the form for editing the specified resource.
+     * @route [GET] /jobs/{job}/edit
      */
     public function edit(Job $job): View
     {
@@ -96,6 +101,7 @@ class JobController extends Controller
 
     /**
      * Update the specified resource in storage.
+     * @route [PUT] /jobs/{job}
      */
     public function update(Request $request, Job $job)
     {
@@ -129,6 +135,7 @@ class JobController extends Controller
 
     /**
      * Remove the specified resource from storage.
+     * @route [DELETE] /jobs/{job}
      */
     public function destroy(Job $job): RedirectResponse
     {
@@ -141,6 +148,7 @@ class JobController extends Controller
 
     /**
      * Show the saved jobs
+     * @route [GET] /jobs/saved
      */
     public function saved()
     {

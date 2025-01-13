@@ -10,6 +10,7 @@ These instructions will help you set up and run the project using Docker.
 
 - Docker
 - Docker Compose
+- NPM
 
 ### Installation
 
@@ -19,12 +20,22 @@ These instructions will help you set up and run the project using Docker.
     cd workopia
     ```
 
-2. Copy the example environment variables file and modify it as needed:
+2. Install node modules:
     ```sh
-    cp src/.env.example src/.env
+    cd src
+    npm install
     ```
 
-3. Build and start the server container and its dependencies:
+3. Copy the example environment variables file and modify it as needed:
+    ```sh
+    cp .env.example .env
+    ```
+
+4. Move to the root directory:
+    ```sh
+    cd ..
+
+5. Build and start the server container and its dependencies:
     ```sh
     make start
     
@@ -33,7 +44,7 @@ These instructions will help you set up and run the project using Docker.
     docker-compose up -d --build server
     ```
 
-4. Install dependencies
+6. Install dependencies
     ```sh
     make install
     
@@ -42,7 +53,7 @@ These instructions will help you set up and run the project using Docker.
     docker-compose run --rm composer install
     docker-compose run --rm npm i
 
-4. Create the database
+7. Create the database
     ```sh
     make migrate
     
