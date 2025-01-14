@@ -4,13 +4,17 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\View\View;
-use App\Models\Job;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
+use App\Models\Job;
 
 class JobController extends Controller
 {
+    use AuthorizesRequests;
+
     private const FIELD_VALIDATION = [
         'title' => 'required|string|max:255',
         'description' => 'required|string',
@@ -74,8 +78,7 @@ class JobController extends Controller
             }
         }
 
-        //todo: replace user_id with session user id
-        Job::create($validatedData + ['user_id' => 1]);
+        Job::create($validatedData + ['user_id' => Auth::user()->id]);
 
         // When with() is used with redirect(), the data is stored in the session
         return redirect()->route('jobs.index')->with('success', 'Job listing created successfully.');
@@ -96,6 +99,9 @@ class JobController extends Controller
      */
     public function edit(Job $job): View
     {
+        // Check if user is authorized
+        $this->authorize('update', $job);
+
         return view('jobs.edit')->with('job', $job);
     }
 
@@ -105,6 +111,9 @@ class JobController extends Controller
      */
     public function update(Request $request, Job $job)
     {
+        // Check if user is authorized
+        $this->authorize('update', $job);
+
         $validatedData = $request->validate(self::FIELD_VALIDATION);
 
         // Upload file if exists
@@ -139,6 +148,9 @@ class JobController extends Controller
      */
     public function destroy(Job $job): RedirectResponse
     {
+        // Check if user is authorized
+        $this->authorize('delete', $job);
+
         if ($job->company_logo) {
             Storage::disk('public')->delete('jobs/company_logos/' . $job->company_logo);
         }
