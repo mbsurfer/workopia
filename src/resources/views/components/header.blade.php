@@ -1,10 +1,14 @@
 @php
     $navigation = [
-        ['/jobs','All Jobs'],
-        ['/jobs/saved','Saved Jobs'],
-        ['/login','Login'],
-        ['/register','Register'],
-        ['/dashboard','Dashboard'],
+        'auth' => [
+            ['/jobs','All Jobs'],
+            ['/jobs/saved','Saved Jobs'],
+            ['/dashboard','Dashboard', 'gauge'],
+        ],
+        'unauth' => [
+            ['/login','Login'],
+            ['/register','Register'],
+        ],
     ]
 @endphp
 <header class="bg-blue-900 text-white p-4" x-data="{ open: false }">
@@ -13,10 +17,18 @@
             <a href="{{url('/')}}">Workopia</a>
         </h1>
         <nav class="hidden md:flex items-center space-x-4">
-            @foreach($navigation as $nav)
-                <x-nav-link url="{{$nav[0]}}" :active="request()->is($nav[0])">{{$nav[1]}}</x-nav-link>
-            @endforeach
-            <x-button-link url="/jobs/create" icon="edit">Create Job</x-button-link>
+            @auth
+                @foreach($navigation['auth'] as $nav)
+                    <x-nav-link url="{{$nav[0]}}" :active="request()->is($nav[0])" :icon="$nav[2] ?? null">{{$nav[1]}}</x-nav-link>
+                @endforeach
+                <x-logout-button />
+                <x-button-link url="/jobs/create" icon="edit">Create Job</x-button-link>
+            @else
+                @foreach($navigation['unauth'] as $nav)
+                    <x-nav-link url="{{$nav[0]}}" :active="request()->is($nav[0])" :icon="$nav[2] ?? null">{{$nav[1]}}</x-nav-link>
+                @endforeach
+            @endauth
+            
         </nav>
         <button
             id="hamburger"
@@ -33,9 +45,17 @@
         x-show="open"
         @click.away="open = false"
     >
-        @foreach($navigation as $nav)
-            <x-nav-link url="{{$nav[0]}}" :active="request()->is($nav[0])" :mobile="true">{{$nav[1]}}</x-nav-link>
-        @endforeach
-        <x-button-link url="/jobs/create" icon="edit" :block="true">Create Job</x-button-link>
+        @auth
+            @foreach($navigation['auth'] as $nav)
+                <x-nav-link url="{{$nav[0]}}" :active="request()->is($nav[0])" :mobile="true" :icon="$nav[2] ?? null">{{$nav[1]}}</x-nav-link>
+            @endforeach
+            <x-logout-button />
+            <x-button-link url="/jobs/create" icon="edit" :block="true">Create Job</x-button-link>
+        @else
+            @foreach($navigation['unauth'] as $nav)
+                <x-nav-link url="{{$nav[0]}}" :active="request()->is($nav[0])" :mobile="true" :icon="$nav[2] ?? null">{{$nav[1]}}</x-nav-link>
+            @endforeach
+        @endauth
+        
     </nav>
 </header>
