@@ -155,7 +155,14 @@ class JobController extends Controller
             Storage::disk('public')->delete('jobs/company_logos/' . $job->company_logo);
         }
         $job->delete();
-        return Redirect::route('jobs.index')->with('success', 'Job listing deleted successfully.');
+
+        // Check if the request was from the dashboard
+        if (request()->query('from') == 'dashboard') {
+            return redirect()->route('dashboard')->with('success', 'Job listing deleted successfully.');
+        }
+
+        // Fallback redirect if we were on the job listing page
+        return redirect()->route('jobs.index')->with('success', 'Job listing deleted successfully.');
     }
 
     /**
