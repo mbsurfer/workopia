@@ -6,7 +6,6 @@ use App\Models\User;
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Storage;
 
 class DatabaseSeeder extends Seeder
 {
@@ -22,6 +21,7 @@ class DatabaseSeeder extends Seeder
         $this->command->info('Truncated users table.');
 
         $this->call([
+            TestUserSeeder::class,
             RandomUserSeeder::class,
             JobSeeder::class,
         ]);

@@ -28,5 +28,3 @@ seeder:
 	docker-compose run --rm artisan make:seeder
 seed:
 	docker-compose run --rm artisan db:seed
-dev:
-	cd ./src && npm run dev
