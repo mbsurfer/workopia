@@ -8,6 +8,8 @@ install:
 	docker-compose run --rm npm i
 migrate:
 	docker-compose run --rm artisan migrate
+migration:
+	docker-compose run --rm artisan make:migration
 controller:
 	docker-compose run --rm artisan make:controller
 resource-controller:

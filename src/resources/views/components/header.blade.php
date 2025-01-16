@@ -3,7 +3,6 @@
         'auth' => [
             ['/jobs','All Jobs'],
             ['/jobs/saved','Saved Jobs'],
-            ['/dashboard','Dashboard', 'gauge'],
         ],
         'unauth' => [
             ['/login','Login'],
@@ -22,6 +21,13 @@
                     <x-nav-link url="{{$nav[0]}}" :active="request()->is($nav[0])" :icon="$nav[2] ?? null">{{$nav[1]}}</x-nav-link>
                 @endforeach
                 <x-logout-button />
+                    <a href="{{route('dashboard')}}">
+                        <img
+                            src="{{ (Auth::user()->avatar) ? asset('storage/users/avatars/'. Auth::user()->avatar) : asset('images/default-avatar.png') }}"
+                            alt="{{ Auth::user()->name }}"
+                            class="w-10 h-10 rounded-full"
+                        >
+                    </a>
                 <x-button-link url="/jobs/create" icon="edit">Create Job</x-button-link>
             @else
                 @foreach($navigation['unauth'] as $nav)
@@ -49,7 +55,8 @@
             @foreach($navigation['auth'] as $nav)
                 <x-nav-link url="{{$nav[0]}}" :active="request()->is($nav[0])" :mobile="true" :icon="$nav[2] ?? null">{{$nav[1]}}</x-nav-link>
             @endforeach
-            <x-logout-button />
+            <x-nav-link url="dashboard" :active="request()->is('dashboard')" :mobile="true" icon="gauge">Dashboard</x-nav-link>
+            <x-logout-button :mobile="true" />
             <x-button-link url="/jobs/create" icon="edit" :block="true">Create Job</x-button-link>
         @else
             @foreach($navigation['unauth'] as $nav)
