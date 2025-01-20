@@ -1,4 +1,4 @@
-@props(['id', 'name', 'placeholder', 'value' => null, 'label' => null, 'type' => 'text'])
+@props(['id', 'name', 'placeholder', 'value' => null, 'label' => null, 'type' => 'text', 'required' => false])
 
 <div class="mb-4">
     @if ($label)
@@ -20,6 +20,7 @@
         ])
         placeholder="{{ $placeholder }}"
         value="{{ old($name, $value) }}"
+        @if ($required) required @endif
     />
     @error($name)
         <p class="text-red-500 text-sm mt-1">{{ $message }}</p>    

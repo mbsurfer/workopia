@@ -63,4 +63,9 @@ class User extends Authenticatable
     {
         return $this->bookmarkedJobs()->where('job_id', $job->id)->exists();
     }
+
+    public function applicants(): HasMany
+    {
+        return $this->hasMany(Applicant::class, 'user_id');
+    }
 }
