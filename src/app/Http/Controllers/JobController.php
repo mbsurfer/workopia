@@ -42,7 +42,7 @@ class JobController extends Controller
      */
     public function index(): View
     {
-        $jobs = Job::all();
+        $jobs = Job::latest()->paginate(9);
 
         return view('jobs.index', compact('jobs'));
     }
@@ -90,7 +90,16 @@ class JobController extends Controller
      */
     public function show(Job $job)
     {
-        return view('jobs.show')->with('job', $job);
+        // Check if the user has bookmarked the job
+        $isBookmarked = false;
+
+        if (Auth::check()) {
+            /** @var App\Models\User $user */
+            $user = Auth::user();
+            $isBookmarked = $user->hasBookmarked($job);
+        }
+
+        return view('jobs.show')->with(compact('job', 'isBookmarked'));
     }
 
     /**

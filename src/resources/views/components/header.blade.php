@@ -1,12 +1,12 @@
 @php
     $navigation = [
         'auth' => [
-            ['/jobs','All Jobs'],
-            ['/jobs/saved','Saved Jobs'],
+            ['jobs','All Jobs'],
+            ['bookmarks','Saved Jobs'],
         ],
         'unauth' => [
-            ['/login','Login'],
-            ['/register','Register'],
+            ['login','Login'],
+            ['register','Register'],
         ],
     ]
 @endphp

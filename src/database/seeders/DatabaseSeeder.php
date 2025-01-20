@@ -2,7 +2,6 @@
 
 namespace Database\Seeders;
 
-use App\Models\User;
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
@@ -27,10 +26,14 @@ class DatabaseSeeder extends Seeder
             File::deleteDirectory($user_file_destination);
         }
 
+        DB::table('job_user_bookmarks')->truncate();
+        $this->command->info('Truncated job_user_bookmarks table.');
+
         $this->call([
             TestUserSeeder::class,
             RandomUserSeeder::class,
             JobSeeder::class,
+            BookmarkSeeder::class
         ]);
     }
 }

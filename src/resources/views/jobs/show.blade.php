@@ -123,13 +123,34 @@
                 class="text-blue-500"
                 >Visit Website</a
             >
-
-            <a
-                href=""
-                class="mt-10 bg-blue-500 hover:bg-blue-600 text-white font-bold w-full py-2 px-4 rounded-full flex items-center justify-center"
-                ><i class="fas fa-bookmark mr-3"></i> Bookmark
-                Listing</a
-            >
+            @auth
+                @if ($isBookmarked)
+                    <form action="{{ route('bookmarks.destroy', $job) }}" method="POST">
+                        @method('DELETE')
+                        @csrf
+                        <button
+                            type="submit"
+                            class="mt-10 bg-red-500 hover:bg-red-600 text-white font-bold w-full py-2 px-4 rounded-full flex items-center justify-center"
+                            ><i class="fas fa-close mr-3"></i> Remove Bookmark
+                        </button>
+                    </form>
+                @else
+                    <form action="{{ route('bookmarks.store', $job) }}" method="POST">
+                        @method('POST')
+                        @csrf
+                        <button
+                            type="submit"
+                            class="mt-10 bg-blue-500 hover:bg-blue-600 text-white font-bold w-full py-2 px-4 rounded-full flex items-center justify-center"
+                            ><i class="fas fa-bookmark mr-3"></i> Bookmark
+                            Listing
+                        </button>
+                    </form>
+                @endif
+            @else
+                <p class="mt-10 bg-gray-200 text-grey-700 font-bold with-full py-2 px-4 rounded-full text-center">
+                    <i class="fas fa-info-circle mr-3"></i> Log in to bookmark a job
+                </p>
+            @endauth
         </aside>
     </div>
 </x-layout>
