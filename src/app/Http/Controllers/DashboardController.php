@@ -17,10 +17,11 @@ class DashboardController extends Controller
     public function index(): View
     {
         // Get the logged in user
+        /** @var App\Models\User $user */
         $user = Auth::user();
 
         // Get the user's job listings
-        $jobs = $user->jobs;
+        $jobs = $user->jobs()->with('applicants')->get();
 
         return view('dashboard.index', compact('user', 'jobs'));
     }

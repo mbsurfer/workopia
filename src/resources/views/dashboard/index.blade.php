@@ -39,7 +39,7 @@
             </h3>
             <!-- Listing 1 -->
             @forelse ($jobs as $job)
-                <div class="flex justify-between items-center border-b-2 border-gray-200 py-2">
+                <div class="flex justify-between items-center border-b-2 border-gray-200 py-4">
                     <div>
                         <h3 class="text-xl font-semibold">
                             <a href="{{ route('jobs.show', $job) }}">{{ $job->title }}</a>
@@ -64,6 +64,43 @@
                             </button>
                         </form>
                     </div>
+                </div>
+                <div class="my-2 p-4 bg-gray-100">
+                    <h4 class="text-lg font-semibold">Applicants</h4>
+                    @forelse ($job->applicants as $applicant)
+                        <div class="flex justify-between items-center py-2">
+                            <div>
+                                <h5 class="text-base font-semibold">{{ $applicant->full_name }}</h5>
+                                <p class="text-sm text-gray-700">{{ $applicant->contact_email }}</p>
+                                <p class="text-sm text-gray-700">{{ $applicant->contact_phone }}</p>
+                            </div>
+                            <div class="flex-auto mx-10">
+                                <p class="text-sm align-left">{{ $applicant->message }}</p>
+                            </div>
+                            <div>
+                                <a
+                                    href="{{ asset('storage/applicants/resumes/' . $applicant->resume) }}"
+                                    class="text-blue-500 hover:underline text-sm"
+                                    download
+                                >
+                                    <i class="fas fa-download"></i> Download Resume
+                                </a>
+                                <form method="POST" action="{{ route('applicants.destroy', $applicant) }}" onsubmit="return confirm('Are you sure you want to delete this applicant?')">
+                                    @csrf
+                                    @method('DELETE')
+                                    <button
+                                        type="submit"
+                                        class="text-red-500 hover:underline text-sm"
+                                    >
+                                    <i class="fas fa-trash"></i> Delete
+                                    </button>
+
+                                </form>
+                            </div>
+                        </div>
+                    @empty
+                        <p class="text-gray-700 text-left">No applicants yet</p>
+                    @endforelse
                 </div>
             @empty
                 <p class="text-gray-700 text-center">You do not own any job listings</p>

@@ -83,36 +83,43 @@
             </div>
 
             @auth
-                <div x-data="{ open: {{ $errors->any() ? 'true' : 'false' }} }">
-                
-                    <button x-on:click="open = true" class="block w-full text-center px-5 py-2.5 shadow-sm rounded border text-base font-medium cursor-pointer text-indigo-700 bg-indigo-100 hover:bg-indigo-200">
-                        Apply Now
-                    </button>
+                @if ($hasApplied)
+                    <p class="bg-green-200 rounded-lg p-3 text-center">
+                        You have already applied for this job. Good luck!
+                    </p>
+                @else
+                    <div x-data="{ open: {{ $errors->any() ? 'true' : 'false' }} }">
+                    
+                        <button x-on:click="open = true" class="block w-full text-center px-5 py-2.5 shadow-sm rounded border text-base font-medium cursor-pointer text-indigo-700 bg-indigo-100 hover:bg-indigo-200">
+                            Apply Now
+                        </button>
 
-                    <div x-show="open" x-cloak class="fixed inset-0 flex items-center justify-center bg-gray-900 bg-opacity-50">
-                        <div x-on:click.away="open = false" class="bg-white p-6 rounded-lg shadow-md w-full max-w-md">
-                            <h3 class="text-lg font-semibold mb-4">
-                                Apply for {{ $job->title }}
-                            </h3>
-                            <form enctype="multipart/form-data">
-                                @csrf
-                                <x-inputs.text id="full_name" name="full_name" label="Full Name" placeholder="John Smith" :required="true" />
-                                <x-inputs.text id="contact_phone" name="contact_phone" label="Contact Phone" placeholder="(555) 555-5555" />
-                                <x-inputs.text id="contact_email" name="contact_email" label="Contact Email" placeholder="jsmith@gmail.com" type="email" :required="true" />
-                                <x-inputs.text-area id="message" name="message" label="Message" placeholder="" />
-                                <x-inputs.text id="location" name="location" label="Location" placeholder="Los Angeles, CA" />
-                                <x-inputs.file id="resume" name="resume" label="Upload Your Resume (pdf)" :required="true" />
+                        <div x-show="open" x-cloak class="fixed inset-0 flex items-center justify-center bg-gray-900 bg-opacity-50">
+                            <div x-on:click.away="open = false" class="bg-white p-6 rounded-lg shadow-md w-full max-w-md">
+                                <h3 class="text-lg font-semibold mb-4">
+                                    Apply for {{ $job->title }}
+                                </h3>
+                                <form method="POST" action={{ route('applicants.store', $job) }} enctype="multipart/form-data">
+                                    @csrf
+                                    <x-inputs.text id="full_name" name="full_name" label="Full Name" placeholder="John Smith" :required="true" />
+                                    <x-inputs.text id="contact_phone" name="contact_phone" label="Contact Phone" placeholder="(555) 555-5555" />
+                                    <x-inputs.text id="contact_email" name="contact_email" label="Contact Email" placeholder="jsmith@gmail.com" type="email" :required="true" />
+                                    <x-inputs.text-area id="message" name="message" label="Message" placeholder="" />
+                                    <x-inputs.text id="location" name="location" label="Location" placeholder="Los Angeles, CA" />
+                                    <x-inputs.file id="resume" name="resume" label="Upload Your Resume (pdf)" :required="true" />
 
-                                <button type="submit" class="px-4 py-2 bg-blue-500 hover:bg-blue-600 text-white rounded-md">Submit Application</button>
-                                <button x-on:click="open = false" class="px-4 py-2 bg-red-500 hover:bg-red-600 text-white rounded-md">Cancel</button>
-                            </form>
+                                    <button type="submit" class="px-4 py-2 bg-blue-500 hover:bg-blue-600 text-white rounded-md">Submit Application</button>
+                                    <button x-on:click="open = false" class="px-4 py-2 bg-red-500 hover:bg-red-600 text-white rounded-md">Cancel</button>
+                                </form>
+                            </div>
                         </div>
                     </div>
-                </div>
+                @endif
             @else
                 <p class="bg-gray-200 rounded-lg p-3">
                     <i class="fa fa-info-circle mr-3"></i>
-                    <a href="{{ route('login') }}" class="text-blue-500">Log in</a> to apply for this job!</p>
+                    <a href="{{ route('login') }}" class="text-blue-500">Log in</a> to apply for this job!
+                </p>
             @endauth
 
             <div class="bg-white p-6 rounded-lg shadow-md mt-6">

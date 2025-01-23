@@ -93,13 +93,19 @@ class JobController extends Controller
         // Check if the user has bookmarked the job
         $isBookmarked = false;
 
+        // Check if user has applied for the job
+        $hasApplied = false;
+
         if (Auth::check()) {
             /** @var App\Models\User $user */
             $user = Auth::user();
             $isBookmarked = $user->hasBookmarked($job);
+            $hasApplied = $job->applicants()->where('user_id', $user->id)->exists();
         }
 
-        return view('jobs.show')->with(compact('job', 'isBookmarked'));
+
+
+        return view('jobs.show')->with(compact('job', 'isBookmarked', 'hasApplied'));
     }
 
     /**
