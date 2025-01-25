@@ -14,7 +14,7 @@ use SebastianBergmann\CodeCoverage\Report\Html\Dashboard;
 
 Route::get('/', [HomeController::class, 'index'])->name('home');
 
-Route::get('/jobs/saved', [JobController::class, 'saved']);
+Route::get('/jobs/search', [JobController::class, 'search'])->name('jobs.search');
 Route::resource('jobs', JobController::class)->middleware('auth')->only([
     'create',
     'store',
